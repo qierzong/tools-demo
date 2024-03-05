@@ -23,7 +23,9 @@ interface LayoutProps {
 export default ({ className, style, children, saveProps }: FragmentProps & LayoutProps) => (
   <>
     <div className="llm-toolbar">
-      <AppenLogo fillOpacity={1} />
+      <span style={{ padding: '0 8px', display: 'flex', alignItems: 'center' }}>
+        <AppenLogo fillOpacity={1} />
+      </span>
       <div
         className={cx('llm-tool-bar-operate', className)}
         style={style}

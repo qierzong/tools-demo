@@ -17,7 +17,7 @@ const AnnotationResult = ({ value, onselect }: AnnotationResultProps) => {
                 )
             }) : (
                 <div className="empty">
-                    尚未标注
+                    {/* 尚未标注 */}
                 </div>
             )}
         </>)
