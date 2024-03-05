@@ -1,9 +1,73 @@
 import { makeAutoObservable } from 'mobx';
-import { Rect } from '../components/shapes/rect';
+import { RectAttr } from '../components/shapes/rect';
 import { toJS } from 'mobx';
-export interface GroupItem { [key: string]: { shape: Rect[], inputValue: string} }
+export interface GroupItem { [key: string]: { shape: RectAttr[], inputValue: string} }
 class Store {
-    shapes: GroupItem | undefined = undefined
+    shapes: GroupItem | undefined = {
+        "00:00:00": {
+            "shape": [
+                {
+                    "text": "实例1",
+                    "startX": 149,
+                    "startY": 314,
+                    "endX": 429,
+                    "endY": 604,
+                    "strokeStyle": "#ea7ebf"
+                }
+            ],
+            "inputValue": "123【实例1】"
+        },
+        "00:00:01": {
+            "shape": [
+                {
+                    "text": "实例1",
+                    "startX": 233,
+                    "startY": 250,
+                    "endX": 505,
+                    "endY": 582,
+                    "strokeStyle": "#b3e2ef"
+                },
+                {
+                    "text": "实例2",
+                    "startX": 569,
+                    "startY": 130,
+                    "endX": 845,
+                    "endY": 452,
+                    "strokeStyle": "#fc2dd3"
+                }
+            ],
+            "inputValue": "456【实例2】"
+        },
+        "00:00:02": {
+            "shape": [
+                {
+                    "text": "实例1",
+                    "startX": 177,
+                    "startY": 358,
+                    "endX": 355,
+                    "endY": 640,
+                    "strokeStyle": "#946af7"
+                },
+                {
+                    "text": "实例2",
+                    "startX": 547,
+                    "startY": 48,
+                    "endX": 801,
+                    "endY": 552,
+                    "strokeStyle": "#e5b879"
+                },
+                {
+                    "text": "实例3",
+                    "startX": 925,
+                    "startY": 220,
+                    "endX": 1049,
+                    "endY": 622,
+                    "strokeStyle": "#1057a8"
+                }
+            ],
+            "inputValue": ""
+        }
+    }
 
     currentGroup: string | undefined = undefined;
 
@@ -13,7 +77,7 @@ class Store {
         makeAutoObservable(this, { shapes: true }, { deep: true });
     }
 
-    updateShapes(groupItem: { time: string, shape: Rect[] }) {
+    updateShapes(groupItem: { time: string, shape: RectAttr[] }) {
         const { time, shape } = groupItem
         if (!this.shapes) {
             this.shapes = { [time]: {shape: [...shape], inputValue: ''} }
@@ -28,6 +92,7 @@ class Store {
                 
             };
         }
+        // console.log(toJS(this.shapes))
         this.currentGroup = time
 
     }
@@ -35,7 +100,7 @@ class Store {
         this.currentGroup = groupKey
     }
 
-    setCurrentShape(shape: Rect, index) {
+    setCurrentShape(shape: RectAttr, index) {
         if(!this.shapes || !this.currentGroup) {
             return;
         }

@@ -1,9 +1,9 @@
 import React from "react";
-import { Rect } from "../shapes/rect";
+import { RectAttr } from "../shapes/rect";
 
 interface AnnotationResultProps {
-    value?: Rect[],
-    onSelect?: (val: Rect, index: number) => void
+    value?: RectAttr[],
+    onSelect?: (val: RectAttr, index: number) => void
 }
 const AnnotationResult = ({ value, onSelect }: AnnotationResultProps) => {
     return (

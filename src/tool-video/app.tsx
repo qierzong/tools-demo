@@ -8,7 +8,7 @@ import { observer } from 'mobx-react';
 import InputWrapper from '../components/input/InputWrapper';
 import Instruction from '../components/instruction/Instruction';
 import AnnotationVideo from '../components/annotationVideo/AnnotationVideo';
-import { Rect } from '../components/shapes/rect';
+import { RectAttr } from '../components/shapes/rect';
 import '../app.scss';
 
 interface VideoCompProps {
@@ -24,7 +24,7 @@ class VideoComp extends React.Component<VideoCompProps> {
     await store.init();
   }
 
-  updateShapes = (value: { time: string, shape: Rect[] }) => {
+  updateShapes = (value: { time: string, shape: RectAttr[] }) => {
     store.updateShapes(value)
   }
 
@@ -42,6 +42,8 @@ class VideoComp extends React.Component<VideoCompProps> {
         <Layout>
           <SidePanel>
             <AnnotationVideo
+              value={store.shapes}
+              currentTime={store.currentGroup}
               onChange={this.updateShapes}
               onTimeUpdate={this.timeUpdated}
             />

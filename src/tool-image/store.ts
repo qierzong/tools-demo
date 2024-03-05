@@ -1,10 +1,9 @@
 import { makeAutoObservable } from 'mobx';
-import { Rect } from '../components/shapes/rect';
-
+import { RectAttr } from '../components/shapes/rect';
+import { toJS } from 'mobx';
 class Store {
-    shapes: Rect[] = []
-
-    currentShape: Rect | undefined = undefined;
+    shapes: RectAttr[] = undefined
+    currentShape: RectAttr | undefined = undefined;
 
     inputValue: string = ''
 
@@ -15,11 +14,11 @@ class Store {
         });
     }
 
-    setShapes(shapes: Rect[]) {
+    setShapes(shapes: RectAttr[]) {
         this.shapes = [...shapes]
     }
 
-    setCurrentShape(shape: Rect, index) {
+    setCurrentShape(shape: RectAttr, index) {
         this.currentShape = shape
         this.inputValue = `${this.inputValue} 【${shape.text}】`
     }

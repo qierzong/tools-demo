@@ -1,11 +1,12 @@
 import React from "react";
-import { Rect } from "../shapes/rect";
+import { Rect, RectAttr } from "../shapes/rect";
 import randomColor from 'randomcolor';
 
 interface AnnotationProps {
-    onChange: (val: Rect[]) => void;
+    onChange: (val: RectAttr[]) => void;
     imageSrc?: string;
     containerName?: string;
+    value?: RectAttr[];
 }
 
 export class Annotation extends React.Component<AnnotationProps> {
@@ -28,8 +29,7 @@ export class Annotation extends React.Component<AnnotationProps> {
     isDragging = false
     rectCache: Rect[] = []
     backgroundImage: HTMLImageElement
-    onChange: (val: Rect[]) => void;
-
+    onChange: (val: RectAttr[]) => void;
 
     constructor(props: AnnotationProps) {
         super(props);
@@ -51,8 +51,22 @@ export class Annotation extends React.Component<AnnotationProps> {
         canvas.addEventListener('mousedown', this.mousedown);
         canvas.addEventListener('mousemove', this.mousemove);
         canvas.addEventListener('mouseup', this.mouseup);
-
+        this.generateDefaultShapes()
         this.draw()
+    }
+    componentDidUpdate(prevProps: Readonly<AnnotationProps>, prevState: Readonly<{}>, snapshot?: any): void {
+        if (prevProps.value !== this.props.value) {
+            this.generateDefaultShapes()
+            this.draw()
+        }
+    }
+    generateDefaultShapes = () => {
+        if (this.props.value && this.props.value.length > 0) {
+            const defaultShapes = this.props.value.map(item => {
+                return this.createRectFromData(item)
+            })
+            this.rectCache = [...defaultShapes]
+        }
     }
     updateCanvasSizeByImage = () => {
         const canvas = this.canvasRef.current! as HTMLCanvasElement;
@@ -84,7 +98,6 @@ export class Annotation extends React.Component<AnnotationProps> {
             };
             canvas.width = width * this.ratio;
             canvas.height = height * this.ratio;
-            // }
         }
     }
     mousemove = (e) => {
@@ -143,8 +156,9 @@ export class Annotation extends React.Component<AnnotationProps> {
         this.mousedownPosition = null
         this.mousemovePosition = null
         this.currentRectShape = null
-        this.onChange(this.rectCache)
+        this.onChange(this.rectCache.map(item => item.toJSON()))
     }
+
     initImage() {
         return new Promise((resolve: (val: HTMLImageElement) => void, reject) => {
             const image = new Image();
@@ -164,6 +178,9 @@ export class Annotation extends React.Component<AnnotationProps> {
         this.ctx?.drawImage(this.backgroundImage, 0, 0, this.containerSize.width * this.ratio, this.containerSize.height * this.ratio);
     }
     draw = () => {
+        if (!this.ctx) {
+            return;
+        }
         requestAnimationFrame(this.draw)
         this.ctx!.clearRect(0, 0, this.containerSize.width * this.ratio, this.containerSize.height * this.ratio);
         this.drawImage()
@@ -178,6 +195,18 @@ export class Annotation extends React.Component<AnnotationProps> {
         this.currentRectShape.startY = this.mousedownPosition.y;
         this.currentRectShape.endX = this.mousemovePosition.x;
         this.currentRectShape.endY = this.mousemovePosition.y;
+    }
+    createRectFromData({ startX, startY, endX, endY, strokeStyle, text }) {
+        const shape = new Rect({
+            ctx: this.ctx,
+            startX,
+            startY,
+            endX,
+            endY,
+            strokeStyle,
+            text
+        })
+        return shape
     }
 
     createRect() {

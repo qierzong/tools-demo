@@ -1,3 +1,11 @@
+export interface RectAttr {
+    startX: number;
+    endX: number;
+    startY: number;
+    endY: number;
+    text: string;
+    strokeStyle: string;
+}
 export class Rect {
     startX: number;
     startY: number;
@@ -82,9 +90,14 @@ export class Rect {
     isInside({ x, y }) {
         return x >= this.minX && x <= this.maxX && y >= this.minY && y <= this.maxY
     }
-    toJSON() {
+    toJSON(): RectAttr {
         return {
-            text: this.text
+            text: this.text,
+            startX: this.startX,
+            startY: this.startY,
+            endX: this.endX,
+            endY: this.endY,
+            strokeStyle: this.strokeStyle,
         }
     }
 }

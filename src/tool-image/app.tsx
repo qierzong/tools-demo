@@ -1,4 +1,5 @@
 import React from 'react';
+import { toJS } from 'mobx';
 import Layout, { MainContent, SidePanel } from '../components/layout/Layout';
 import LayoutWrapper from '../components/layout/LayoutWrapper';
 import Sidebar, { AnnotationResultPanel } from '../components/layout/sidebar';
@@ -31,8 +32,9 @@ class ImageComp extends React.Component<ImageCompProps> {
         <Layout>
           <SidePanel>
             <Annotation
+              value={toJS(store.shapes)}
               onChange={(shapes) => store.setShapes(shapes)}
-              imageSrc= 'https://oss-prd.appen.com.cn:9001/appen-matrixgo/test/dogs.jpg'
+              imageSrc='https://oss-prd.appen.com.cn:9001/appen-matrixgo/test/dogs.jpg'
             />
             <Sidebar>
               <AnnotationResultPanel>
