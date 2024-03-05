@@ -17,12 +17,6 @@ export class Annotation extends React.Component<AnnotationProps> {
         left: 0,
         top: 0
     };
-    bgImageSize = {
-        width: 0,
-        height: 0,
-        left: 0,
-        top: 0
-    };
 
 
     mousedownPosition
@@ -40,9 +34,13 @@ export class Annotation extends React.Component<AnnotationProps> {
 
     }
     async componentDidMount() {
+        this.backgroundImage = await this.initImage()
+
         const canvas = this.canvasRef.current! as HTMLCanvasElement;
         this.ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
-        const { width, height, left, top } = canvas.getBoundingClientRect();
+        const { width, left, top } = canvas.getBoundingClientRect();
+        const height = width / this.backgroundImage.width * this.backgroundImage.height;
+
         this.containerSize = {
             width,
             height,
@@ -54,14 +52,7 @@ export class Annotation extends React.Component<AnnotationProps> {
         canvas.addEventListener('mousedown', this.mousedown);
         canvas.addEventListener('mousemove', this.mousemove);
         canvas.addEventListener('mouseup', this.mouseup);
-        this.backgroundImage = await this.initImage()
-
-        this.bgImageSize = {
-            width: this.backgroundImage.width,
-            height: this.backgroundImage.height,
-            left: (canvas.width - this.backgroundImage.width) / 2,
-            top: (canvas.height - this.backgroundImage.height) / 2
-        }
+        
         this.draw()
     }
 
@@ -136,7 +127,7 @@ export class Annotation extends React.Component<AnnotationProps> {
         })
     }
     drawImage() {
-        this.ctx?.drawImage(this.backgroundImage, this.bgImageSize.left, this.bgImageSize.top)
+        this.ctx?.drawImage(this.backgroundImage, 0, 0, this.containerSize.width * this.ratio, this.containerSize.height * this.ratio);
     }
     draw = () => {
         requestAnimationFrame(this.draw)
@@ -192,7 +183,7 @@ export class Annotation extends React.Component<AnnotationProps> {
                 style={{
                     display: 'block',
                     width: '100%',
-                    height: '100%',
+                    // height: '100%',
                 }}>
             </canvas>
         )

@@ -28,14 +28,16 @@ class App extends React.Component<AppProps> {
       <LayoutWrapper
         className="demo-app"
       >
-        <Layout
-        >
+        <Layout>
           <MainContent>
-            <Annotation
-              onChange={(shapes) => store.setShapes(shapes)}
+          <InputWrapper
+              tagValue={store.currentShape}
             />
           </MainContent>
           <SidePanel>
+          <Annotation
+              onChange={(shapes) => store.setShapes(shapes)}
+            />
             <Sidebar>
               <AnnotationResultPanel>
                 <AnnotationResult
@@ -45,11 +47,6 @@ class App extends React.Component<AppProps> {
               </AnnotationResultPanel>
             </Sidebar>
           </SidePanel>
-          <InputArea>
-            <InputWrapper
-              tagValue={store.currentShape}
-            />
-          </InputArea>
         </Layout>
       </LayoutWrapper>
     );

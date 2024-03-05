@@ -45,13 +45,13 @@
   display: flex;
   flex-direction: column;
   position: relative;
-  padding-left: 400px;
+  // padding-left: 400px;
 
   .llm-side-panel {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 400px;
+    // position: absolute;
+    // left: 0;
+    // top: 0;
+    width: 640px;
     height: 100%;
     border-right: 1px solid #CFD5E5;
     overflow-y: auto;

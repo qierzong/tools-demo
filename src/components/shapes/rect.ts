@@ -7,7 +7,7 @@ export class Rect {
     text = '';
     ratio = window.devicePixelRatio
     strokeStyle = '#ff0000'
-    textSize = { width: 60 * this.ratio, height: 20 * this.ratio };
+    textSize = { width: 42 * this.ratio, height: 20 * this.ratio };
     roundRectRadius = 2 * this.ratio;
     roundRectStyle = '#FFE600';
     fontStyle = `${12 * this.ratio}px Arial`;
@@ -52,6 +52,7 @@ export class Rect {
         }
         const width = this.maxX - this.minX
         const height = this.maxY - this.minY;
+        this.ctx.lineWidth = 2 * this.ratio;
         this.ctx.strokeStyle = this.strokeStyle;
         this.ctx.strokeRect(this.minX, this.minY, width, height);
     }
@@ -60,13 +61,12 @@ export class Rect {
             return
         }
         const rectPos = {
-            x: this.minX,
-            y: this.minY - this.textSize.height
+            x: this.minX - 1 * this.ratio,
+            y: this.minY - this.textSize.height - 1 * this.ratio,
         };
         const textPos = {
-            x: this.minX + this.textSize.width / 4,
+            x: this.minX + 4 * this.ratio,
             y: this.minY - this.textSize.height / 3
-
         };
         this.ctx.font = this.fontStyle;
         this.ctx.fillStyle = this.roundRectStyle;
