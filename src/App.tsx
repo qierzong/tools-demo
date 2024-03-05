@@ -31,13 +31,13 @@ class App extends React.Component<AppProps> {
         <Layout>
           <SidePanel>
             <Annotation
-              onChange={(shapes, index) => store.setShapes(shapes, index)}
+              onChange={(shapes) => store.setShapes(shapes)}
             />
             <Sidebar>
               <AnnotationResultPanel>
                 <AnnotationResult
                   value={store.shapes}
-                  onselect={(shape) => store.setCurrentShape(shape)}
+                  onselect={(shape, index) => store.setCurrentShape(shape, index)}
                 />
               </AnnotationResultPanel>
             </Sidebar>
