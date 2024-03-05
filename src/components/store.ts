@@ -3,7 +3,7 @@ import { Rect } from './shapes/rect';
 class Store {
     shapes: Rect[] = []
 
-    currentShape: Rect|undefined = undefined;
+    currentShape: Rect | undefined = undefined;
 
     inputValue: string = ''
 
@@ -13,11 +13,11 @@ class Store {
         });
     }
 
-    setShapes(shapes: Rect[], index) {
+    setShapes(shapes: Rect[]) {
         this.shapes = [...shapes]
     }
 
-    setCurrentShape(shape: Rect) {
+    setCurrentShape(shape: Rect, index) {
         this.currentShape = shape
         this.inputValue = `${this.inputValue} 【${shape.text}】`
     }
@@ -29,7 +29,5 @@ class Store {
         this.initialized = true;
 
     }
-
-    
 }
 export default new Store();

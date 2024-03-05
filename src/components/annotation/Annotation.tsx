@@ -3,7 +3,7 @@ import { Rect } from "../shapes/rect";
 import randomColor from 'randomcolor';
 
 interface AnnotationProps {
-    onChange: (val: Rect[], index: number) => void;
+    onChange: (val: Rect[]) => void;
 }
 
 export class Annotation extends React.Component<AnnotationProps> {
@@ -24,7 +24,7 @@ export class Annotation extends React.Component<AnnotationProps> {
     isDragging = false
     rectCache: Rect[] = []
     backgroundImage: HTMLImageElement
-    onChange: (val: Rect[], index: number) => void;
+    onChange: (val: Rect[]) => void;
 
 
     constructor(props: AnnotationProps) {

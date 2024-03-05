@@ -6,7 +6,6 @@ interface AnnotationResultProps {
     onselect?: (val: Rect, index: number) => void
 }
 const AnnotationResult = ({ value, onselect }: AnnotationResultProps) => {
-    console.log(value)
     return (
         <>
             {value && value.length > 0 ? value.map((item, index: number) => {
