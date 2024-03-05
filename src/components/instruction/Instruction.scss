@@ -1,0 +1,25 @@
+.instruction {
+  background-color: #FFFBDC;
+  padding: 24px;
+  color: #212633;
+  line-height: 20px;
+
+  &-title {
+    font-weight: 600;
+  }
+  &-content {
+    width: 100%;
+    padding: 0;
+    word-break: break-all;
+
+    img {
+      max-width: 100%;
+      margin-bottom: 12px;
+    }
+    .formula {
+      font-size: 16px;
+      text-align: center;
+      margin: 12px 0;
+    }
+  }
+}

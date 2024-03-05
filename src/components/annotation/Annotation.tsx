@@ -1,10 +1,9 @@
 import React from "react";
-// import bgImage from '../../images/bg.jpg?base64';
-import './Annotation.scss';
 import { Rect } from "../shapes/rect";
+import randomColor from 'randomcolor';
 
 interface AnnotationProps {
-    onChange: (val: Rect[]) => void;
+    onChange: (val: Rect[], index: number) => void;
 }
 
 export class Annotation extends React.Component<AnnotationProps> {
@@ -25,7 +24,7 @@ export class Annotation extends React.Component<AnnotationProps> {
     isDragging = false
     rectCache: Rect[] = []
     backgroundImage: HTMLImageElement
-    onChange: (val: Rect[]) => void;
+    onChange: (val: Rect[], index: number) => void;
 
 
     constructor(props: AnnotationProps) {
@@ -159,7 +158,7 @@ export class Annotation extends React.Component<AnnotationProps> {
             startY: this.mousedownPosition.y,
             endX: this.mousemovePosition?.x,
             endY: this.mousemovePosition?.y,
-            strokeStyle: '#ff0000',
+            strokeStyle: randomColor(),
             text: `实例${this.rectCache.length + 1}`
         })
         if (shape.ignore) {

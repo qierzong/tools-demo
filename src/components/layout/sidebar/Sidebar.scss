@@ -1,9 +1,7 @@
 .demo-layout .sidebar {
   float: left;
   width: 100%;
-  height: calc(100% - 36px - 2px);
-  position: relative;
-
+  // position: relative;
 
   .scroller {
     height: 100%;
@@ -17,8 +15,6 @@
   }
   .annotation-result-panel {
     width: 100%;
-    display: flex;
-    flex-wrap: wrap;
     padding: 10px;
   }
 

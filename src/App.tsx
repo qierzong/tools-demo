@@ -8,6 +8,7 @@ import AnnotationResult from './components/annotationResult/AnnotationResult';
 import { observer } from 'mobx-react';
 import './app.scss';
 import InputWrapper from './components/input/InputWrapper';
+import Instruction from './components/instruction/Instruction';
 
 interface AppProps {
 }
@@ -16,7 +17,6 @@ class App extends React.Component<AppProps> {
 
   constructor(props: AppProps) {
     super(props);
-
   }
 
   async componentDidMount() {
@@ -29,24 +29,26 @@ class App extends React.Component<AppProps> {
         className="demo-app"
       >
         <Layout>
-          <MainContent>
-          <InputWrapper
-              tagValue={store.currentShape}
-            />
-          </MainContent>
           <SidePanel>
-          <Annotation
-              onChange={(shapes) => store.setShapes(shapes)}
+            <Annotation
+              onChange={(shapes, index) => store.setShapes(shapes, index)}
             />
             <Sidebar>
               <AnnotationResultPanel>
                 <AnnotationResult
                   value={store.shapes}
                   onselect={(shape) => store.setCurrentShape(shape)}
-                  currentShape={store.currentShape} />
+                />
               </AnnotationResultPanel>
             </Sidebar>
           </SidePanel>
+          <MainContent>
+            <Instruction />
+            <InputWrapper
+              value={store.inputValue}
+              onChange={(val: string) => store.setInputValue(val)}
+            />
+          </MainContent>
         </Layout>
       </LayoutWrapper>
     );

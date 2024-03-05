@@ -5,26 +5,31 @@ class Store {
 
     currentShape: Rect|undefined = undefined;
 
-    /**
-     * is tool initialized
-     */
+    inputValue: string = ''
+
     initialized = false;
     constructor() {
         makeAutoObservable(this, {
         });
-
     }
-    setShapes(shapes: Rect[]) {
+
+    setShapes(shapes: Rect[], index) {
         this.shapes = [...shapes]
     }
 
     setCurrentShape(shape: Rect) {
         this.currentShape = shape
+        this.inputValue = `${this.inputValue} 【${shape.text}】`
     }
 
+    setInputValue(val: string) {
+        this.inputValue = val
+    }
     async init() {
         this.initialized = true;
 
     }
+
+    
 }
 export default new Store();

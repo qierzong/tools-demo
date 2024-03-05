@@ -1,32 +1,22 @@
-import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
-
-import { Rect } from '../shapes/rect';
+import React from 'react';
 import TextArea from 'antd/es/input/TextArea';
 
-
 interface InputWrapperProps {
-  tagValue?: Rect;
-
+  value?: string;
+  onChange: (val: string) => void;
 }
 
 const InputWrapper: React.FC<InputWrapperProps> = ({
-  tagValue
-}) => { console.log('tagValue', tagValue)
-  const [value, setValue] = useState('');
-  const textRef = useRef<HTMLTextAreaElement>(null);
-  useEffect(() => {
-    if (tagValue && tagValue.text) {
-      const newValue = `${value}${tagValue.text}`
-      setValue(newValue)
-    }
-  }, [tagValue])
+  value,
+  onChange
+}) => {
   return (
     <TextArea
-      ref={textRef}
+      autoFocus
       value={value}
-      onChange={(e) => setValue(e.target.value)}
+      onChange={(e) => onChange(e.target.value)}
       placeholder="请在此处输入..."
-      autoSize={{ minRows: 3, maxRows: 5 }}
+      autoSize={{ minRows: 10 }}
     />
   );
 };

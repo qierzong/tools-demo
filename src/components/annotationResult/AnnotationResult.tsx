@@ -1,22 +1,21 @@
-import React, { useEffect } from "react";
-import cx from 'classnames';
+import React from "react";
 import { Rect } from "../shapes/rect";
 
 interface AnnotationResultProps {
     value?: Rect[],
-    currentShape?: Rect;
-    onselect?: (val: Rect) => void
+    onselect?: (val: Rect, index: number) => void
 }
-const AnnotationResult = ({ value, onselect, currentShape }: AnnotationResultProps) => {
+const AnnotationResult = ({ value, onselect }: AnnotationResultProps) => {
+    console.log(value)
     return (
         <>
             {value && value.length > 0 ? value.map((item, index: number) => {
                 return (
-                    <div key={index} className={cx("tag", {selected: currentShape?.text === item.text})} onClick={() => { onselect?.(item, index) }}>
+                    <div key={index} className="tag" style={{backgroundColor: item.strokeStyle}} onClick={() => { onselect?.(item, index) }}>
                         {item.text}
                     </div>
                 )
-            }): (
+            }) : (
                 <div className="empty">
                     尚未标注
                 </div>
