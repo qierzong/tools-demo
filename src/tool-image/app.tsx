@@ -1,21 +1,21 @@
 import React from 'react';
-import Layout, { InputArea, MainContent, SidePanel } from './components/layout/Layout';
-import LayoutWrapper from './components/layout/LayoutWrapper';
-import Sidebar, { AnnotationResultPanel } from './components/layout/sidebar';
-import Annotation from './components/annotation/Annotation';
-import store from './components/store';
-import AnnotationResult from './components/annotationResult/AnnotationResult';
+import Layout, { MainContent, SidePanel } from '../components/layout/Layout';
+import LayoutWrapper from '../components/layout/LayoutWrapper';
+import Sidebar, { AnnotationResultPanel } from '../components/layout/sidebar';
+import Annotation from '../components/annotation/Annotation';
+import store from './store';
+import AnnotationResult from '../components/annotationResult/AnnotationResult';
 import { observer } from 'mobx-react';
-import './app.scss';
-import InputWrapper from './components/input/InputWrapper';
-import Instruction from './components/instruction/Instruction';
+import InputWrapper from '../components/input/InputWrapper';
+import Instruction from '../components/instruction/Instruction';
+import '../app.scss';
 
-interface AppProps {
+interface ImageCompProps {
 }
 
-class App extends React.Component<AppProps> {
+class ImageComp extends React.Component<ImageCompProps> {
 
-  constructor(props: AppProps) {
+  constructor(props: ImageCompProps) {
     super(props);
   }
 
@@ -32,12 +32,13 @@ class App extends React.Component<AppProps> {
           <SidePanel>
             <Annotation
               onChange={(shapes) => store.setShapes(shapes)}
+              imageSrc= 'https://oss-prd.appen.com.cn:9001/appen-matrixgo/test/dogs.jpg'
             />
             <Sidebar>
               <AnnotationResultPanel>
                 <AnnotationResult
                   value={store.shapes}
-                  onselect={(shape, index) => store.setCurrentShape(shape, index)}
+                  onSelect={(shape, index) => store.setCurrentShape(shape, index)}
                 />
               </AnnotationResultPanel>
             </Sidebar>
@@ -55,4 +56,4 @@ class App extends React.Component<AppProps> {
   }
 }
 
-export default observer(App);
+export default observer(ImageComp);

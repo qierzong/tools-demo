@@ -1,0 +1,29 @@
+.video-wrapper {
+    position: relative;
+    video {
+        width: 100%;
+    }
+    canvas {
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+}
+.info-wrapper {
+    display: flex;
+    padding: 10px;
+    align-items: center;
+    .buttons {
+        display: flex;
+        padding: 10px;
+        button.ant-btn {
+            width: 64px;
+            margin-right: 8px;
+            border-radius: 4px;
+            outline: 0;
+            border: none;
+            box-shadow: none;
+        }
+    }
+}

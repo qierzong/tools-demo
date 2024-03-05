@@ -1,5 +1,6 @@
-import { makeAutoObservable, runInAction, action, makeObservable } from 'mobx';
-import { Rect } from './shapes/rect';
+import { makeAutoObservable } from 'mobx';
+import { Rect } from '../components/shapes/rect';
+
 class Store {
     shapes: Rect[] = []
 
@@ -8,6 +9,7 @@ class Store {
     inputValue: string = ''
 
     initialized = false;
+    
     constructor() {
         makeAutoObservable(this, {
         });

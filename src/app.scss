@@ -1,6 +1,7 @@
 .demo-app {
   background-color: #F5F8FF;
   align-items: center;
+
   .tag {
     width: 140px;
     height: 24px;
@@ -16,10 +17,21 @@
     display: flex;
     align-items: center;
     justify-content: center;
-}
+
+    &.group-name {
+      width: 100px;
+    }
+
+    &.selected {
+      background-color: #007693;
+      color: #fff;
+    }
+  }
+
   .empty {
     color: #55545e;
   }
+
   textarea.ant-input {
     padding: 24px;
     border-radius: 0;

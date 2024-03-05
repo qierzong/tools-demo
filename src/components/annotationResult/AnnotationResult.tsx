@@ -3,14 +3,14 @@ import { Rect } from "../shapes/rect";
 
 interface AnnotationResultProps {
     value?: Rect[],
-    onselect?: (val: Rect, index: number) => void
+    onSelect?: (val: Rect, index: number) => void
 }
-const AnnotationResult = ({ value, onselect }: AnnotationResultProps) => {
+const AnnotationResult = ({ value, onSelect }: AnnotationResultProps) => {
     return (
         <>
             {value && value.length > 0 ? value.map((item, index: number) => {
                 return (
-                    <div key={index} className="tag" style={{backgroundColor: item.strokeStyle}} onClick={() => { onselect?.(item, index) }}>
+                    <div key={index} className="tag" style={{backgroundColor: item.strokeStyle}} onClick={() => { onSelect?.(item, index) }}>
                         {item.text}
                     </div>
                 )

@@ -4,9 +4,13 @@ import randomColor from 'randomcolor';
 
 interface AnnotationProps {
     onChange: (val: Rect[]) => void;
+    imageSrc?: string;
+    containerName?: string;
 }
 
 export class Annotation extends React.Component<AnnotationProps> {
+    containerName;
+    imageSrc;
     canvasRef: React.RefObject<HTMLCanvasElement> = React.createRef();
     ctx: CanvasRenderingContext2D | null = null;
     ratio = window.devicePixelRatio
@@ -29,32 +33,60 @@ export class Annotation extends React.Component<AnnotationProps> {
 
     constructor(props: AnnotationProps) {
         super(props);
+        this.imageSrc = props.imageSrc
+        this.containerName = props.containerName
         this.onChange = props.onChange
 
     }
     async componentDidMount() {
-        this.backgroundImage = await this.initImage()
-
+        if (this.imageSrc) {
+            this.backgroundImage = await this.initImage()
+            this.updateCanvasSizeByImage()
+        } else {
+            this.updateCanvasSizeByContainer()
+        }
         const canvas = this.canvasRef.current! as HTMLCanvasElement;
         this.ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
-        const { width, left, top } = canvas.getBoundingClientRect();
-        const height = width / this.backgroundImage.width * this.backgroundImage.height;
 
-        this.containerSize = {
-            width,
-            height,
-            left,
-            top
-        };
-        canvas.width = width * this.ratio;
-        canvas.height = height * this.ratio;
         canvas.addEventListener('mousedown', this.mousedown);
         canvas.addEventListener('mousemove', this.mousemove);
         canvas.addEventListener('mouseup', this.mouseup);
-        
+
         this.draw()
     }
+    updateCanvasSizeByImage = () => {
+        const canvas = this.canvasRef.current! as HTMLCanvasElement;
+        const { width, left, top } = canvas.getBoundingClientRect();
+        if (this.backgroundImage) {
+            const height = width / this.backgroundImage.width * this.backgroundImage.height;
+            this.containerSize = {
+                width,
+                height,
+                left,
+                top
+            };
+            canvas.width = width * this.ratio;
+            canvas.height = height * this.ratio;
+        }
+    }
 
+    updateCanvasSizeByContainer = () => {
+        const canvas = this.canvasRef.current! as HTMLCanvasElement;
+        const container = document.querySelector(`.${this.containerName}`)
+        if (container) {
+
+            const { width, height, left, top } = container.getBoundingClientRect();
+            this.containerSize = {
+                width,
+                height,
+                left,
+                top
+            };
+            canvas.width = width * this.ratio;
+            canvas.height = height * this.ratio;
+            // }
+        }
+    }
     mousemove = (e) => {
         if (!this.isDragging) {
             return;
@@ -116,7 +148,7 @@ export class Annotation extends React.Component<AnnotationProps> {
     initImage() {
         return new Promise((resolve: (val: HTMLImageElement) => void, reject) => {
             const image = new Image();
-            image.src = 'https://oss-prd.appen.com.cn:9001/appen-matrixgo/test/dogs.jpg';
+            image.src = this.imageSrc;
             image.onload = () => {
                 resolve(image)
             }
@@ -126,6 +158,9 @@ export class Annotation extends React.Component<AnnotationProps> {
         })
     }
     drawImage() {
+        if (!this.backgroundImage) {
+            return;
+        }
         this.ctx?.drawImage(this.backgroundImage, 0, 0, this.containerSize.width * this.ratio, this.containerSize.height * this.ratio);
     }
     draw = () => {
